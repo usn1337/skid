@@ -673,7 +673,7 @@ local function parentUI(gui)
     end)
 
     if not success and failure then
-        gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+        gui.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
     end
 end
 
@@ -5069,7 +5069,7 @@ local Whitelisted = { "4302c2658", "rusnaxxx" }
 
 local ScriptUsers = {}
 
-local player = game.Players.LocalPlayer
+local player = game:GetService("Players").LocalPlayer
 
 local function isWhitelisted(username)
     for _, whitelistedName in ipairs(Whitelisted) do
@@ -5232,7 +5232,7 @@ game:GetService("RunService").Heartbeat:Connect(function(dt)
     if headshots.KillAura.Enabled and headshots.KillAura.Keybind and localPlayer and localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart") and localPlayer.Character:FindFirstChild("Humanoid") and localPlayer.Character:FindFirstChild("Head") then
         for _, player in pairs(players:GetPlayers()) do
             if player ~= localPlayer and player.Character and player.Character:FindFirstChild("Head") and not KnockCheck(player) and not player.Character:FindFirstChild("ForceField") then
-                local distance = (player.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+                local distance = (player.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
                 local Tool = localPlayer.Character and localPlayer.Character:FindFirstChildOfClass("Tool")
                 if distance <= headshots.KillAura.Distance and distance < shortestDistance and Tool then
                     local args = {
@@ -5473,7 +5473,7 @@ local function IsPlayerVisible(targetCharacter)
     
     local rayParams = RaycastParams.new()
     rayParams.FilterType = Enum.RaycastFilterType.Blacklist
-    rayParams.FilterDescendantsInstances = {game.Players.LocalPlayer.Character}
+    rayParams.FilterDescendantsInstances = {game:GetService("Players").LocalPlayer.Character}
 
     local result = workspace:Raycast(origin, direction, rayParams)
 
@@ -5726,7 +5726,7 @@ game:GetService("RunService").Heartbeat:Connect(function(dt)
             local tool = localPlayer.Character:FindFirstChildOfClass("Tool")
             if tool and TargetPlayer.Character and (not TargetPlayer.Character:FindFirstChild("ForceField") or tool.Name == "[Rifle]") then
 
-                local distance = (TargetPlayer.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+                local distance = (TargetPlayer.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
                 local Tool = localPlayer.Character and localPlayer.Character:FindFirstChildOfClass("Tool")
     
                 if Tool then
@@ -5784,8 +5784,8 @@ game:GetService("RunService").Heartbeat:Connect(function(dt)
                                             ["theOffset"] = CFrame.new(0, 0, 0)
                                         }
                                     },
-                                    game.Players.LocalPlayer.Character.Head.Position,
-                                    game.Players.LocalPlayer.Character.Head.Position,
+                                    game:GetService("Players").LocalPlayer.Character.Head.Position,
+                                    game:GetService("Players").LocalPlayer.Character.Head.Position,
                                     workspace:GetServerTimeNow()
                                 }
                             }
@@ -5914,7 +5914,7 @@ game:GetService("RunService").Heartbeat:Connect(function(dt)
     if headshots.KillAura.StompAura and localPlayer and localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart") and localPlayer.Character:FindFirstChild("Humanoid") and localPlayer.Character:FindFirstChild("Head") then
         for _, player in pairs(players:GetPlayers()) do
             if player ~= localPlayer and player.Character and player.Character:FindFirstChild("Head") and KnockCheck(player) and not player.Character:FindFirstChild("ForceField") then
-                local distance = (player.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+                local distance = (player.Character.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
                 if distance <= headshots.KillAura.Distance and distance < shortestDistance then
                     local bodyEffects = player.Character:FindFirstChild("BodyEffects")
                     local isDead = bodyEffects and bodyEffects:FindFirstChild("SDeath") and bodyEffects.SDeath.Value
@@ -6151,8 +6151,8 @@ local originalCharacterColors = {}
 local originalToolColors = {}
 
 game:GetService("RunService").Heartbeat:Connect(function(dt)
-    if game.Players.LocalPlayer.Character then
-        local char = game.Players.LocalPlayer.Character
+    if game:GetService("Players").LocalPlayer.Character then
+        local char = game:GetService("Players").LocalPlayer.Character
 
         if headshots.SelfVisuals.Character then
             for _, part in ipairs(char:GetChildren()) do
@@ -6202,7 +6202,7 @@ game:GetService("RunService").Heartbeat:Connect(function(dt)
                 else
                     local NewAura = game:GetObjects(getcustomasset(library.directory .. "/assets/PinkShyt.rbxm"))[1]
                     for _, v in ipairs(NewAura:GetChildren()) do
-                        v.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+                        v.Parent = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
                     end
                     NewAura:Destroy()
                 end
@@ -6233,7 +6233,7 @@ game:GetService("RunService").Heartbeat:Connect(function(dt)
             else
                 local NewAura = game:GetObjects(getcustomasset(library.directory .. "/assets/WalkSteps.rbxm"))[1]
                 for _, v in ipairs(NewAura:GetChildren()) do
-                    v.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+                    v.Parent = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
                 end
                 NewAura:Destroy()
             end
@@ -6248,7 +6248,7 @@ game:GetService("RunService").Heartbeat:Connect(function(dt)
 end)
 
 function ResetCharacterColors()
-    local char = game.Players.LocalPlayer.Character
+    local char = game:GetService("Players").LocalPlayer.Character
     if char then
         for part, originalColor in pairs(originalCharacterColors) do
             if part and part:IsA("BasePart") then
@@ -6260,7 +6260,7 @@ function ResetCharacterColors()
 end
 
 function ResetToolColors()
-    local char = game.Players.LocalPlayer.Character
+    local char = game:GetService("Players").LocalPlayer.Character
     if char then
         local tool = char:FindFirstChildOfClass("Tool")
         if tool then
@@ -6280,17 +6280,17 @@ local SavedPosition = localPlayer.Character.HumanoidRootPart.CFrame
 game:GetService("RunService").Heartbeat:Connect(function(dt)
 
     if headshots.AntiStomp.Enabled then
-        if game.Players.LocalPlayer.Character.Humanoid.Health <= 5 then
-            if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
-                game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Parent = game.Players.LocalPlayer.Backpack
+        if game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 5 then
+            if game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool") then
+                game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool").Parent = game:GetService("Players").LocalPlayer.Backpack
             end
 
-            for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+            for i,v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
                 if v:IsA('MeshPart') or v:IsA('Part') then
                     v:Destroy()
                 end
             end
-            for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+            for i,v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
                 if v:IsA('Accessory') then
                     v.Handle:Destroy()
                 end
@@ -6348,13 +6348,13 @@ local ShopTable = {
 }
 
 game:GetService('RunService').Heartbeat:Connect(function()
-    if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character.HumanoidRootPart then
+    if game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character.HumanoidRootPart then
         pcall(function()
             -- Buy Single
-            if BuyingSingle and not game.Players.LocalPlayer.Character:FindFirstChild(SelectedGun) and not game.Players.LocalPlayer.Backpack:FindFirstChild(SelectedGun) then
+            if BuyingSingle and not game:GetService("Players").LocalPlayer.Character:FindFirstChild(SelectedGun) and not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(SelectedGun) then
                 if game.Workspace.Ignored.Shop:FindFirstChild(ShopTable[SelectedGun].ShopName):FindFirstChild("Head") then
-                    SavedPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Ignored.Shop:FindFirstChild(ShopTable[SelectedGun].ShopName).Head.CFrame
+                    SavedPosition = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
+                    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Ignored.Shop:FindFirstChild(ShopTable[SelectedGun].ShopName).Head.CFrame
                     fireclickdetector(game.Workspace.Ignored.Shop:FindFirstChild(ShopTable[SelectedGun].ShopName):FindFirstChildOfClass("ClickDetector"))
                     game:GetService("RunService"):BindToRenderStep("RestoreCFrame", 199, function()
                         game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = SavedPosition
@@ -6370,11 +6370,11 @@ game:GetService('RunService').Heartbeat:Connect(function()
                 local AmmoName = "[" .. SelectedGun:sub(2, -2) .. " Ammo]"
                 if ShopTable[AmmoName] then
                     if game.Workspace.Ignored.Shop:FindFirstChild(ShopTable[AmmoName].ShopName):FindFirstChild("Head") then
-                        if game.Players.LocalPlayer.Character:FindFirstChild(SelectedGun) then
-                            game.Players.LocalPlayer.Character:FindFirstChild(SelectedGun).Parent = game.Players.LocalPlayer.Backpack
+                        if game:GetService("Players").LocalPlayer.Character:FindFirstChild(SelectedGun) then
+                            game:GetService("Players").LocalPlayer.Character:FindFirstChild(SelectedGun).Parent = game:GetService("Players").LocalPlayer.Backpack
                         end
-                        SavedPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Ignored.Shop:FindFirstChild(ShopTable[AmmoName].ShopName).Head.CFrame
+                        SavedPosition = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
+                        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Ignored.Shop:FindFirstChild(ShopTable[AmmoName].ShopName).Head.CFrame
                         fireclickdetector(game.Workspace.Ignored.Shop:FindFirstChild(ShopTable[AmmoName].ShopName):FindFirstChildOfClass("ClickDetector"))
                         game:GetService("RunService"):BindToRenderStep("RestoreCFrame", 199, function()
                             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = SavedPosition
@@ -6385,14 +6385,14 @@ game:GetService('RunService').Heartbeat:Connect(function()
             end
 
             -- Auto Loadout
-            if headshots.AutoLoadout.Enabled and headshots.AutoLoadout.Gun and ShopTable[headshots.AutoLoadout.Gun] and game.Players.LocalPlayer.Character and not game.Players.LocalPlayer.Character:FindFirstChild(headshots.AutoLoadout.Gun) and not game.Players.LocalPlayer.Backpack:FindFirstChild(headshots.AutoLoadout.Gun) then
+            if headshots.AutoLoadout.Enabled and headshots.AutoLoadout.Gun and ShopTable[headshots.AutoLoadout.Gun] and game:GetService("Players").LocalPlayer.Character and not game:GetService("Players").LocalPlayer.Character:FindFirstChild(headshots.AutoLoadout.Gun) and not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(headshots.AutoLoadout.Gun) then
                 local ShopItem = game.Workspace.Ignored.Shop:FindFirstChild(ShopTable[headshots.AutoLoadout.Gun].ShopName)
                 if ShopItem and ShopItem:FindFirstChild("Head") then
-                    SavedPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = ShopItem.Head.CFrame
+                    SavedPosition = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
+                    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = ShopItem.Head.CFrame
                     fireclickdetector(ShopItem:FindFirstChildOfClass("ClickDetector"))
                     game:GetService("RunService"):BindToRenderStep("RestoreCFrame", 199, function()
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = SavedPosition
+                        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = SavedPosition
                         game:GetService("RunService"):UnbindFromRenderStep("RestoreCFrame")
                     end)
                 else
@@ -6400,9 +6400,9 @@ game:GetService('RunService').Heartbeat:Connect(function()
                 end
 
             -- Auto Armor
-            elseif headshots.AutoArmor.Enabled and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character.BodyEffects and game.Players.LocalPlayer.Character.BodyEffects.Armor and game.Players.LocalPlayer.Character.BodyEffects.Armor.Value < 100 then
-                SavedPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Ignored.Shop:FindFirstChild('[High-Medium Armor] - $2513').Head.CFrame
+            elseif headshots.AutoArmor.Enabled and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character.BodyEffects and game:GetService("Players").LocalPlayer.Character.BodyEffects.Armor and game:GetService("Players").LocalPlayer.Character.BodyEffects.Armor.Value < 100 then
+                SavedPosition = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
+                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Ignored.Shop:FindFirstChild('[High-Medium Armor] - $2513').Head.CFrame
                 fireclickdetector(game.Workspace.Ignored.Shop:FindFirstChild('[High-Medium Armor] - $2513'):FindFirstChildOfClass("ClickDetector"))
                 game:GetService("RunService"):BindToRenderStep("RestoreCFrame", 199, function()
                     game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = SavedPosition
@@ -6464,7 +6464,7 @@ end)
 game:GetService("RunService").Heartbeat:Connect(function(dt)
     if headshots.Target.AutoKill then
         if headshots.Target.Target ~= nil then
-            local Target = game.Players:FindFirstChild(headshots.Target.Target)
+            local Target = game:GetService("Players"):FindFirstChild(headshots.Target.Target)
             
             if Target and Target.Character and localPlayer and localPlayer.Character then
                 local humanoidRootPart = localPlayer.Character:FindFirstChild("HumanoidRootPart")
@@ -6474,7 +6474,7 @@ game:GetService("RunService").Heartbeat:Connect(function(dt)
                 local targetHRP = Target.Character:FindFirstChild("HumanoidRootPart")
                 local targetHead = Target.Character:FindFirstChild("Head")
 
-                local SavedPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                local SavedPosition = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
 
                 if humanoidRootPart and head and toolHandle and targetHRP and targetHead then
                     if not KnockCheck(Target) then
@@ -6486,7 +6486,7 @@ game:GetService("RunService").Heartbeat:Connect(function(dt)
                             MainEvent:FireServer("ShootGun", toolHandle, toolHandle.Position, Target.Character.Head.Position, targetHead, Vector3.new(0, 1, 0))
                         else
                             -- Spawn Protection
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame += Vector3.new(math.random(-80000,80000), math.random(0,80000), math.random(-80000,80000))
+                            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame += Vector3.new(math.random(-80000,80000), math.random(0,80000), math.random(-80000,80000))
                             library:notification({ text = "headshots.cc - Waiting.. Target has spawn protection.", time = 1 })
                             MainEvent:FireServer("Reload", tool)
                         end
@@ -6509,7 +6509,7 @@ game:GetService("RunService").Heartbeat:Connect(function(dt)
                             end
                         elseif isDead == true then
                             -- Move to safe position when target is dead
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame += Vector3.new(math.random(-80000,80000), math.random(0,80000), math.random(-80000,80000))
+                            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame += Vector3.new(math.random(-80000,80000), math.random(0,80000), math.random(-80000,80000))
                             library:notification({ text = "headshots.cc - Waiting.. Target is currently dead.", time = 1 })
                             MainEvent:FireServer("Reload", tool)
                         end
@@ -6524,7 +6524,7 @@ game:GetService("RunService").Heartbeat:Connect(function(dt)
                     end
                 else
                     -- If gun is not equipped
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame += Vector3.new(math.random(-80000,80000), math.random(0,80000), math.random(-80000,80000))
+                    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame += Vector3.new(math.random(-80000,80000), math.random(0,80000), math.random(-80000,80000))
                     library:notification({ text = "headshots.cc - Waiting.. Equip your gun while using 'Auto Kill Target'.", time = 1 })
 
                     if headshots.Target.AutoKillDesync then
@@ -6537,7 +6537,7 @@ game:GetService("RunService").Heartbeat:Connect(function(dt)
             end
         else
             -- If no target is found
-            local humanoidRootPart = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+            local humanoidRootPart = game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
             if humanoidRootPart then
                 humanoidRootPart.CFrame = CFrame.new(0, 500, 0)
             end
@@ -7373,7 +7373,7 @@ if not utility.funcs.universal then
                 elseif check_type == "physics" then
                     return humanoid:GetState() ~= Enum.HumanoidStateType.Physics
                 elseif check_type == "arsenal" then
-                    local player = game.Players:FindFirstChild(prey)
+                    local player = game:GetService("Players"):FindFirstChild(prey)
                     if not player or not player:FindFirstChild("NRPBS") or not player.Character then
                         return false
                     end
@@ -8935,17 +8935,17 @@ end})
 local UserID = 244844600
 
 section:toggle({name = "avatar changer", flag = "avatarchanger_enabled", callback = function(Value)
-    if game.Players.LocalPlayer.Character.Humanoid.HumanoidDescription.RightArm == 0 then
+    if game:GetService("Players").LocalPlayer.Character.Humanoid.HumanoidDescription.RightArm == 0 then
         if Value then
-            for _, item in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+            for _, item in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
                 if item:IsA("Shirt") or item:IsA("Pants") or item:IsA("Accessory") then
                     item:Destroy()
                 end
             end
         
-            game.Players.LocalPlayer.Character.Humanoid:ApplyDescriptionClientServer(game.Players:GetHumanoidDescriptionFromUserId(UserID))
+            game:GetService("Players").LocalPlayer.Character.Humanoid:ApplyDescriptionClientServer(game:GetService("Players"):GetHumanoidDescriptionFromUserId(UserID))
         else
-            game.Players.LocalPlayer.Character.Humanoid:ApplyDescriptionClientServer(game.Players:GetHumanoidDescriptionFromUserId(game.Players.LocalPlayer.UserId))
+            game:GetService("Players").LocalPlayer.Character.Humanoid:ApplyDescriptionClientServer(game:GetService("Players"):GetHumanoidDescriptionFromUserId(game:GetService("Players").LocalPlayer.UserId))
         end
     else
         library:notification({ text = "headshots.cc - 'Avatar Changer' Module requires you to use the 'Blocky / Default Packages' Right Arm. Please change your avatar.", time = 3 })
@@ -8967,7 +8967,7 @@ end})
 section:toggle({name = "character", flag = "charactermaterial_enabled", callback = function(Value)
     headshots.SelfVisuals.Character = Value
     if Value == false then
-        for _, part in ipairs(game.Players.LocalPlayer.Character:GetChildren()) do
+        for _, part in ipairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
             if part:IsA("BasePart") then
                 part.Material = Enum.Material.Plastic
             end
@@ -8985,8 +8985,8 @@ end})
 
 section:toggle({name = "tool", flag = "toolmaterial_enabled", callback = function(Value)
     headshots.SelfVisuals.Tool = Value
-    if Value == false and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
-        for _, part in ipairs(game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"):GetChildren()) do
+    if Value == false and game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool") then
+        for _, part in ipairs(game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool"):GetChildren()) do
             if part:IsA("BasePart") then
                 part.Material = Enum.Material.Plastic
             end
@@ -9698,7 +9698,7 @@ local a = false
 game:GetService("RunService").Heartbeat:Connect(function()
     if headshots.Network.Desync then
         a = not a
-        sethiddenproperty(game.Players.LocalPlayer.Character.HumanoidRootPart, "NetworkIsSleeping", a)
+        sethiddenproperty(game:GetService("Players").LocalPlayer.Character.HumanoidRootPart, "NetworkIsSleeping", a)
         if headshots.Network.UseSenderRate and headshots.Network.FakePos == false then
             if a then
                 setfflag("S2PhysicsSenderRate", tostring(headshots.Network.SenderRate))
@@ -9836,7 +9836,7 @@ if Premium then
     section:button({name = "kill", callback = function()
         local originalCFrame = localPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame
         while task.wait() do
-            local Target = game.Players:FindFirstChild(headshots.Target.Target)
+            local Target = game:GetService("Players"):FindFirstChild(headshots.Target.Target)
             if not localPlayer or not localPlayer.Character then continue end
     
             local humanoidRootPart = localPlayer.Character:FindFirstChild("HumanoidRootPart")
@@ -9881,7 +9881,7 @@ if Premium then
     section:button({name = "knock", callback = function()
         local originalCFrame = localPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame
         while task.wait() do
-            local Target = game.Players:FindFirstChild(headshots.Target.Target)
+            local Target = game:GetService("Players"):FindFirstChild(headshots.Target.Target)
             if not localPlayer or not localPlayer.Character then continue end
     
             local humanoidRootPart = localPlayer.Character:FindFirstChild("HumanoidRootPart")
@@ -9918,7 +9918,7 @@ if Premium then
     section:button_holder({})
     
     section:button({name = "go-to", callback = function()
-        local Target = game.Players:FindFirstChild(headshots.Target.Target)
+        local Target = game:GetService("Players"):FindFirstChild(headshots.Target.Target)
         if headshots.Target.Target ~= nil and Target and Target.Character and localPlayer then
             localPlayer.Character.HumanoidRootPart.CFrame = Target.Character.HumanoidRootPart.CFrame
         else
@@ -9926,14 +9926,14 @@ if Premium then
         end
     end})
 
-    local SavedCFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+    local SavedCFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
 
     local conn
     section:toggle({
         name = "spectate",
         callback = function(v)
             if v then
-                local t = game.Players:FindFirstChild(headshots.Target.Target)
+                local t = game:GetService("Players"):FindFirstChild(headshots.Target.Target)
                 if t and t.Character and t.Character:FindFirstChild("Humanoid") then
                     conn = game:GetService("RunService").Heartbeat:Connect(function(dt)
                         workspace.CurrentCamera.CameraSubject = t.Character.Humanoid
@@ -9943,18 +9943,18 @@ if Premium then
                 end
             else
                 if conn then conn:Disconnect() conn = nil end
-                workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+                workspace.CurrentCamera.CameraSubject = game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid")
             end
         end
     })
     
     section:toggle({name = "auto kill", callback = function(Value)
         if Value == true then
-            SavedCFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            SavedCFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
         end
         headshots.Target.AutoKill = Value
         if Value == false then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = SavedCFrame
+            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = SavedCFrame
         end
     end})
 
@@ -10157,7 +10157,7 @@ section:button({
     name = "copy join script",
     callback = function()
         setclipboard('game:GetService("TeleportService"):TeleportToPlaceInstance(' ..
-            game.PlaceId .. ', "' .. game.JobId .. '", game.Players.LocalPlayer)')
+            game.PlaceId .. ', "' .. game.JobId .. '", game:GetService("Players").LocalPlayer)')
     end
 })
 
@@ -10223,17 +10223,17 @@ game:GetService("RunService").Heartbeat:Connect(function(dt)
     end
 
     -- Buy Single Logic
-    if BuyingSingle and not game.Players.LocalPlayer.Character:FindFirstChild(SelectedGun) and not game.Players.LocalPlayer.Backpack:FindFirstChild(SelectedGun) then
+    if BuyingSingle and not game:GetService("Players").LocalPlayer.Character:FindFirstChild(SelectedGun) and not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(SelectedGun) then
         BuyingSingleActive = true
     end
 
     -- Auto Loadout Logic
-    if headshots.AutoLoadout.Enabled and headshots.AutoLoadout.Gun and ShopTable[headshots.AutoLoadout.Gun] and not game.Players.LocalPlayer.Character:FindFirstChild(headshots.AutoLoadout.Gun) and not game.Players.LocalPlayer.Backpack:FindFirstChild(headshots.AutoLoadout.Gun) then
+    if headshots.AutoLoadout.Enabled and headshots.AutoLoadout.Gun and ShopTable[headshots.AutoLoadout.Gun] and not game:GetService("Players").LocalPlayer.Character:FindFirstChild(headshots.AutoLoadout.Gun) and not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(headshots.AutoLoadout.Gun) then
         AutoLoadoutActive = true
     end
 
     -- Auto Armor Logic
-    if headshots.AutoArmor.Enabled and game.Players.LocalPlayer.Character.BodyEffects.Armor.Value < 100 then
+    if headshots.AutoArmor.Enabled and game:GetService("Players").LocalPlayer.Character.BodyEffects.Armor.Value < 100 then
         AutoArmorActive = true
     end
 
